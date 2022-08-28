@@ -28,7 +28,7 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 975513479057.dkr.ecr.us-east-1.amazonaws.com"
-                sh "docker tag myrepo-virginia:latest 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:1.1.1"
+                sh "docker tag myrepo-virginia:1.1.1 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:1.1.1"
                 sh "docker push 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:1.1.1" 
             }
         }
