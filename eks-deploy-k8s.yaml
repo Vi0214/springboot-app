@@ -4,8 +4,6 @@ metadata:
   labels:
     app: springboot-app
   name: springboot-app
-strategy:
-    type: Recreate
 spec:
   replicas: 4
   selector:
