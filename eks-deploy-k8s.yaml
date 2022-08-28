@@ -5,7 +5,12 @@ metadata:
     app: springboot-app
   name: springboot-app
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   selector:
     matchLabels:
       app: springboot-app
