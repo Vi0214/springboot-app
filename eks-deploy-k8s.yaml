@@ -9,8 +9,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 3
-      maxUnavailable: 1
+      maxSurge: 50%
+      maxUnavailable: 50%
   selector:
     matchLabels:
       app: springboot-app
