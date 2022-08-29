@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         registry = "975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia"
+        
     }
 
     stages {
@@ -21,19 +22,23 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    docker.build registry
+                    sh "docker build -t myrepo-virginia ."
+                    sh "docker tag myrepo-virginia:latest 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:1.0.${env.BUILD_NUMBER}"
                 }
             }
         }
         stage('Push to ECR') {
             steps {
+                script {
                 sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 975513479057.dkr.ecr.us-east-1.amazonaws.com"
-                sh "docker push 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:latest" 
+                sh "docker push 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:1.0.${env.BUILD_NUMBER}"
             }
         }
+    }
         stage('Deploy to EKS') {
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'Kube_config', namespace: '', serverUrl: '') {
+                sh "sed -i s/_BUILD_NUMBER_/${env.BUILD_NUMBER}/g eks-deploy-k8s.yaml"
                 sh "kubectl apply -f eks-deploy-k8s.yaml"
               }
             }
