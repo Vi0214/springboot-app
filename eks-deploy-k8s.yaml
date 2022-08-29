@@ -6,11 +6,6 @@ metadata:
   name: springboot-app
 spec:
   replicas: 4
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 50%
-      maxUnavailable: 50%
   selector:
     matchLabels:
       app: springboot-app
@@ -21,7 +16,7 @@ spec:
     spec:
       containers:
       - name: my-springboot-app
-        image: 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:latest
+        image: 975513479057.dkr.ecr.us-east-1.amazonaws.com/myrepo-virginia:_BUILD_NUMBER_
         imagePullPolicy: Always
         ports:
         - containerPort: 8085
