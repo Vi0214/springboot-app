@@ -6,11 +6,6 @@ metadata:
   name: springboot-app
 spec:
   replicas: 4
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 50%
-      maxUnavailable: 50%
   selector:
     matchLabels:
       app: springboot-app
